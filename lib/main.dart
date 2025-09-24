@@ -1,65 +1,99 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
       title: 'Rocket Launch Controller',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // A widget that will be started on the application startup
-      home: CounterWidget(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const CounterWidget(),
     );
   }
 }
 
 class CounterWidget extends StatefulWidget {
+  const CounterWidget({super.key});
+
   @override
-  _CounterWidgetState createState() => _CounterWidgetState();
+  State<CounterWidget> createState() => _CounterWidgetState();
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  //set counter value
   int _counter = 0;
+
+  Color _numberColor() {
+    if (_counter == 0) return Colors.red;        
+    if (_counter > 50) return Colors.green;      
+    return Colors.orange;                        
+  }
 
   @override
   Widget build(BuildContext context) {
+    final liftoff = _counter == 100;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Rocket Launch Controller'),
-      ),
-//set up the widget alignement
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(title: const Text('Rocket Launch Controller')),
+      body: Stack(
         children: [
-          Center(
-            child: Container(
-              color: Colors.blue,
-              child: Text(
-                //to displays current number
-                '$_counter',
-                style: TextStyle(fontSize: 50.0),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              
+              Icon(
+                Icons.flight_takeoff,
+                size: 60,
+                color: Colors.blue,
               ),
-            ),
-          ),
-          Slider(
-            min: 0,
-            max: 100,
-            value: _counter.toDouble(),
-            onChanged: (double value) {
-              setState(() {
-                _counter = value.toInt();
-              });
-            },
-            activeColor: Colors.blue,
-            inactiveColor: Colors.red,
+
+              Text(
+                '$_counter',
+                style: TextStyle(
+                  fontSize: 60,
+                  fontWeight: FontWeight.bold,
+                  color: _counter == 0
+                      ? Colors.red
+                      : _counter > 50
+                          ? Colors.green
+                          : Colors.orange,
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              if (liftoff)
+                const Text(
+                  'LIFTOFF!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.blue,
+                  ),
+                ),
+
+              const SizedBox(height: 20),
+
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Slider(
+                  min: 0,
+                  max: 100,
+                  value: _counter.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      _counter = value.toInt(); 
+                    });
+                  },
+                  activeColor: Colors.blue,
+                  inactiveColor: Colors.red.shade200,
+                ),
+              ),
+            ],
           ),
         ],
       ),
