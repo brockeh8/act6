@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Rocket Launch Controller',
+      title: 'Rocket Launch',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const CounterWidget(),
     );
@@ -36,7 +36,7 @@ class _CounterWidgetState extends State<CounterWidget> {
     final liftoff = _counter == 100;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Rocket Launch Controller')),
+      appBar: AppBar(title: const Text('Rocket Launch')),
       body: Stack(
         children: [
           if (liftoff)
@@ -51,6 +51,7 @@ class _CounterWidgetState extends State<CounterWidget> {
                 ),
               ),
             ),
+
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -88,19 +89,64 @@ class _CounterWidgetState extends State<CounterWidget> {
               const SizedBox(height: 20),
 
 
+              Slider(
+                min: 0,
+                max: 100,
+                value: _counter.toDouble(),
+                onChanged: (double value) {
+                  setState(() {
+                    _counter = value.toInt();
+                  });
+                },
+                activeColor: Colors.blue,
+                inactiveColor: Colors.red,
+              
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _counter++;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text('Ignite'),
+                  ),
+                  SizedBox(width: 40),  
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _counter--;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.yellow,
+                      foregroundColor: Colors.black,
+                    ),
+                    child: Text('Decrement'),
+                  ),
+                ],
+              ),
+
+              
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Slider(
-                  min: 0,
-                  max: 100,
-                  value: _counter.toDouble(),
-                  onChanged: (double value) {
+                padding: const EdgeInsets.only(top: 20),
+                child: ElevatedButton(
+                  onPressed: () {
                     setState(() {
-                      _counter = value.toInt(); 
+                      _counter = 0;
                     });
                   },
-                  activeColor: Colors.blue,
-                  inactiveColor: Colors.red.shade200,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text('Abort'),
                 ),
               ),
             ],
