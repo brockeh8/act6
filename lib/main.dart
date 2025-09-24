@@ -39,7 +39,18 @@ class _CounterWidgetState extends State<CounterWidget> {
       appBar: AppBar(title: const Text('Rocket Launch Controller')),
       body: Stack(
         children: [
-
+          if (liftoff)
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Opacity(
+                  opacity: 0.6,
+                  child: Image.asset(
+                    'assets/confetti.gif',    
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -69,8 +80,7 @@ class _CounterWidgetState extends State<CounterWidget> {
                 const Text(
                   'LIFTOFF!',
                   style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 40,
                     color: Colors.blue,
                   ),
                 ),
