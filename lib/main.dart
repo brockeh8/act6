@@ -5,16 +5,13 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
       title: 'Rocket Launch Controller',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // A widget that will be started on the application startup
       home: CounterWidget(),
     );
   }
@@ -26,7 +23,6 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-  //set counter value
   int _counter = 0;
 
   @override
@@ -35,7 +31,6 @@ class _CounterWidgetState extends State<CounterWidget> {
       appBar: AppBar(
         title: const Text('Rocket Launch Controller'),
       ),
-//set up the widget alignement
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -43,7 +38,6 @@ class _CounterWidgetState extends State<CounterWidget> {
             child: Container(
               color: Colors.blue,
               child: Text(
-                //to displays current number
                 '$_counter',
                 style: TextStyle(fontSize: 50.0),
               ),
@@ -62,32 +56,53 @@ class _CounterWidgetState extends State<CounterWidget> {
             inactiveColor: Colors.red,
           ),
 
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _counter = _counter + 1;
-              });
-            },
-            child: Text('Ignite'),
+        
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _counter++;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text('Ignite'),
+              ),
+              SizedBox(width: 40),  
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _counter--;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow,
+                  foregroundColor: Colors.black,
+                ),
+                child: Text('Decrement'),
+              ),
+            ],
           ),
 
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _counter = _counter - 1;
-              });
-            },
-            child: Text('Decrement'),
-          ),
-
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _counter = 0;
-              });
-            },
-            child: Text('Reset'),
-
+          
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _counter = 0;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              child: Text('Abort'),
+            ),
           ),
         ],
       ),
